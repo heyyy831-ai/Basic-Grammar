@@ -1088,7 +1088,7 @@
                                                 onChange={(e) => setWaitTime(Number(e.target.value))}
                                                 className={`block appearance-none w-full border border-gray-300 dark:border-gray-600 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none text-lg shadow-sm transition-colors ${isAutoMode ? 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400' : 'bg-gray-50 dark:bg-gray-800/50 text-gray-400 dark:text-gray-500 cursor-not-allowed border-gray-200 dark:border-gray-700'}`}
                                             >
-                                                {[3, 4, 5, 6, 7, 8, 9, 10].map(time => (
+                                                {[2, 3, 4, 5, 6, 7, 8, 9, 10].map(time => (
                                                     <option key={time} value={time}>{time}秒</option>
                                                 ))}
                                             </select>
