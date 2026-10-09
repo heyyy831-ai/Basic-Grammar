@@ -608,6 +608,7 @@ function drawHead(){
 function selectLesson(i, keepScroll){
   stopAll();
   LI = i;
+  loadPack(LESSONS[LI].id);
   drawBar(); drawHead();
   renderCheck(); renderDrill(); renderSpeak();
   try { localStorage.setItem("gm-pos", JSON.stringify({ li: LI, m: MODE })); } catch (e) {}
@@ -852,8 +853,24 @@ $("cReset").onclick = () => {
 let dSec = "A", dIdx = 0, dRun = null, dHideJa = false, dMode = "auto";
 const dData = () => (DATA.drill["Lesson " + LESSONS[LI].id] || {});
 const dItems = () => dData()[dSec] || [];
-const dHas = (dir, key) => (HAS[dir][LESSONS[LI].id] || []).includes(key);
-function dSrc(dir, i){ const key = dSec + "-" + i; return dHas(dir, key) ? "audio/" + dir + "/" + LESSONS[LI].id + "/" + key + ".mp3" : null; }
+/* 録音はレッスンごとに audio/<レッスン>.json にまとめてある */
+const PACK = {}, BLOB = {};
+function loadPack(lid){
+  if (!PACK[lid]) PACK[lid] = fetch("snd-" + lid + ".json").then(r => r.ok ? r.json() : {}).catch(() => ({})).then(p => (PACK[lid] = p, p));
+  return Promise.resolve(PACK[lid]);
+}
+function clipUrl(lid, dir, key){
+  const p = PACK[lid]; const b = p && !(p instanceof Promise) && p[dir] && p[dir][key];
+  if (!b) return null;
+  const id = lid + "/" + dir + "/" + key;
+  if (!BLOB[id]) {
+    const bin = atob(b), arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    BLOB[id] = URL.createObjectURL(new Blob([arr], { type: "audio/mpeg" }));
+  }
+  return BLOB[id];
+}
+function dSrc(dir, i){ return clipUrl(LESSONS[LI].id, dir, dSec + "-" + i); }
 function renderDrill(){
   const secs = Object.keys(dData());
   if (!secs.includes(dSec)) dSec = secs[0] || "A";
@@ -883,6 +900,7 @@ async function dFlow(){
   const ac = new AbortController(); dRun = ac; const sig = ac.signal;
   dPlayUI(true);
   const rate = Number($("dSpeed").value), rec = $("dSrc").value === "rec", voice = $("dVoice").value;
+  await loadPack(LESSONS[LI].id);
   try {
     while (dIdx < dItems().length) {
       const it = dItems()[dIdx];
@@ -1089,7 +1107,7 @@ function jpPrompt(text){
 let sIdx = 0, sOpen = false, sRun = null, sHideEn = false;
 const sDone = {};
 const sItems = () => DATA.speak["Lesson " + LESSONS[LI].id] || [];
-function sSrc(q){ return (HAS.s[LESSONS[LI].id] || []).includes(String(q.id)) ? "audio/s/" + LESSONS[LI].id + "/" + q.id + ".mp3" : null; }
+function sSrc(q){ return clipUrl(LESSONS[LI].id, "s", String(q.id)); }
 function renderSpeak(){
   sIdx = Math.min(sIdx, Math.max(0, sItems().length - 1)); sOpen = false;
   $("sList").innerHTML = sItems().map((q, i) =>
@@ -1114,7 +1132,7 @@ function sReveal(){
   sOpen = true; sDone[LI + "-" + sIdx] = true;
   const li = document.querySelector('#sList li[data-i="' + sIdx + '"]'); if (li) li.classList.add("done");
   sShow();
-  return AUD.play(sSrc(q), q.en, Number($("sSpeed").value), $("sSrc").value === "rec", $("sVoice").value);
+  return loadPack(LESSONS[LI].id).then(() => AUD.play(sSrc(q), q.en, Number($("sSpeed").value), $("sSrc").value === "rec", $("sVoice").value));
 }
 async function sFlow(){
   const ac = new AbortController(); sRun = ac; const sig = ac.signal;
