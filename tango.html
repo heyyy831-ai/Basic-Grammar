@@ -111,6 +111,7 @@ h1{font-size:clamp(22px,5vw,30px);line-height:1.35;margin:12px 0 4px;letter-spac
   .en{font-size:19.5px}
 }
 
+.vbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px}.vbar .vnote{font-size:12px;color:var(--ink-3)}.vbar .vpick{max-width:280px}
 .grades{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
 .grade{border:2px solid var(--rule);background:var(--paper);border-radius:12px;padding:10px 22px;font-size:16px;font-weight:700;color:var(--ink-2)}
 .grade:hover{border-color:var(--ink-3);color:var(--ink)}
@@ -130,6 +131,11 @@ h1{font-size:clamp(22px,5vw,30px);line-height:1.35;margin:12px 0 4px;letter-spac
     <div class="grades" id="grades">
       <button class="grade" type="button" data-g="5" aria-pressed="false">英検５級レベル<small id="n5"></small></button>
       <button class="grade" type="button" data-g="4" aria-pressed="false">英検４級レベル<small id="n4"></small></button>
+    </div>
+    <div class="vbar">
+      <label class="vsel">声<select class="vpick" aria-label="読み上げの声"></select></label>
+      <button class="btn" type="button" id="vtest">試聴</button>
+      <span class="vnote">★ は自然な音声（Google・Microsoft Natural など）</span>
     </div>
     <div id="gtools" hidden>
       <p class="lead" id="lead"></p>
@@ -211,7 +217,7 @@ function renderDetail(w){
     <div class="dhead"><h2>${esc(w.h)}</h2><span class="dsub">英検${grade==='5'?'５':'４'}級レベル・${w.ph?'熟語':'単語'}</span></div>
     <div class="bar">
       <button class="btn" type="button" id="rate" aria-pressed="false">ゆっくり</button>
-      <label class="vsel">声<select id="vsel"></select></label>
+      <label class="vsel">声<select class="vpick" aria-label="読み上げの声"></select></label>
     </div>
     <div class="card" id="card">
       <div class="en" lang="en">${highlight(w.en, w.spans)}</div>
@@ -233,22 +239,39 @@ function renderDetail(w){
 }
 // speech
 let slow=false, voice=null, enVoices=[];
+// 自然な音声（Edge の Natural/Online、Chrome の Google、Apple の Premium/Enhanced）を優先
+const NOVELTY=/\b(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/;
+function vRank(v){
+  const n=v.name, us=/^en[-_]US/i.test(v.lang)?0:0.5;
+  if(NOVELTY.test(n)) return 9;
+  if(/Natural|Online/i.test(n)) return 0+us;
+  if(/^Google/i.test(n)) return (/US English/i.test(n)?1:1.2)+us;
+  if(/Premium|Enhanced|Siri/i.test(n)) return 2+us;
+  if(/Samantha|Ava|Allison|Aria|Jenny|Alex|Daniel|Karen|Moira/i.test(n)) return 3+us;
+  return 5+us;
+}
+const isNatural=v=>vRank(v)<3;
 function pickVoice(){
-  enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));
-  const vs=enVoices.filter(v=>/^en[-_]US/i.test(v.lang));
-  const pref=['Samantha','Google US English','Microsoft Aria','Microsoft Jenny','Alex'];
+  enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>vRank(a)-vRank(b)||a.name.localeCompare(b.name));
   const chosen=store.get('goi-voice');
-  voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||vs.find(v=>pref.some(p=>v.name.includes(p)))||vs[0]||enVoices[0]||null;
+  voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||enVoices[0]||null;
   fillVoices();
 }
 function fillVoices(){
-  const sel=$('vsel'); if(!sel) return;
   const chosen=store.get('goi-voice')||'';
-  sel.innerHTML='<option value="">（自動）</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${esc(v.name+' ('+v.lang+')')}</option>`).join('');
-  sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:'';
-  sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop();};
+  const nat=enVoices.filter(isNatural), rest=enVoices.filter(v=>!isNatural(v));
+  const opt=(v,star)=>`<option value="${esc(v.voiceURI)}">${star?'★ ':''}${esc(v.name+' ('+v.lang+')')}</option>`;
+  const html='<option value="">（自動：'+esc(voice?voice.name:'既定')+'）</option>'+
+    (nat.length?'<optgroup label="自然な音声">'+nat.map(v=>opt(v,1)).join('')+'</optgroup>':'')+
+    (rest.length?'<optgroup label="その他の音声">'+rest.map(v=>opt(v,0)).join('')+'</optgroup>':'');
+  document.querySelectorAll('select.vpick').forEach(sel=>{
+    sel.innerHTML=html;
+    sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:'';
+    sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop(); speak('Hello. This is my voice.');};
+  });
 }
-if('speechSynthesis' in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice;}
+if('speechSynthesis' in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,500); setTimeout(pickVoice,1500);}
+$('vtest').onclick=()=>{stop(); speak('Hello. Nice to meet you.');};
 function speak(text,card,done){
   if(!('speechSynthesis' in window)){alert('このブラウザは読み上げに対応していません');return;}
   document.querySelectorAll('.card.playing').forEach(c=>c.classList.remove('playing'));
