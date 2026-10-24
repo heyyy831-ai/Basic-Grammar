@@ -234,6 +234,8 @@
   .wrap.ext{padding-top:10px}
   .subnav{max-width:1040px;margin:0 auto;padding:2px 18px 8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .subnav[hidden]{display:none}
+  #m-howto{max-width:900px;margin:0 auto;padding:4px 0 40px}
+  #m-howto img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 2px 14px rgba(0,0,0,.12)}
   #m-reading iframe{display:block;width:100%;height:calc(100vh - 110px);height:calc(100dvh - var(--navh,110px));border:0;border-top:1px solid var(--rule);background:var(--bg)}
   .wrap.rd{padding-top:0;padding-bottom:0;max-width:none}
   .subnav .sl{font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.08em;margin-right:4px}
@@ -448,6 +450,7 @@
     <button class="st" type="button" data-m="hatsuon" aria-pressed="false">英語の発音</button>
     <button class="st" type="button" data-m="school" aria-pressed="false">学校・塾での本アプリの使い方</button>
     <button class="st" type="button" data-m="home" aria-pressed="false">家庭での本アプリの使い方</button>
+    <button class="st" type="button" data-m="howto" aria-pressed="false">学習方法</button>
   </div>
 </nav>
 
@@ -550,6 +553,7 @@
   <div class="mode sub" id="m-hatsuon"><iframe class="subapp" data-src="hatsuon.html" title="英語の発音"></iframe></div>
   <div class="mode sub" id="m-reading"><iframe class="rdapp" data-src="reading/index.html" title="リーディング"></iframe></div>
   <div class="mode sub" id="m-school"><iframe class="subapp" data-src="tsukaikata.html#school" title="学校・塾での本アプリの使い方"></iframe></div>
+  <div class="mode sub" id="m-howto"><a href="gakushu.jpg" target="_blank" rel="noopener"><img src="gakushu.jpg" width="1024" height="1536" loading="lazy" alt="学習方法：『英会話のための基本英文法 完全マスター』で伸ばす英語運用力"></a></div>
   <div class="mode sub" id="m-home"><iframe class="subapp" data-src="tsukaikata.html#home" title="家庭での本アプリの使い方"></iframe></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -652,7 +656,7 @@ $("chapbar").addEventListener("click", e => {
 });
 $("partbar").addEventListener("click", e => { const b = e.target.closest(".ptab"); if (b) selectLesson(Number(b.dataset.i)); });
 
-const MODE_NAME = { check: "文法理解度チェック", drill: "入れ替えドリル", speak: "瞬間英作", tango: "単語帳", ibunka: "異文化コミュ", hatsuon: "英語の発音", reading: "リーディング", school: "学校・塾での本アプリの使い方", home: "家庭での本アプリの使い方" };
+const MODE_NAME = { check: "文法理解度チェック", drill: "入れ替えドリル", speak: "瞬間英作", tango: "単語帳", ibunka: "異文化コミュ", hatsuon: "英語の発音", reading: "リーディング", school: "学校・塾での本アプリの使い方", home: "家庭での本アプリの使い方", howto: "学習方法" };
 function drawHead(){
   const L = LESSONS[LI];
   $("head").innerHTML =
@@ -683,7 +687,7 @@ function setMode(m){
 }
 
 /* ===== 5 その他（異文化コミュ・英語の発音・本アプリの使い方）===== */
-const ETC = ["ibunka", "hatsuon", "school", "home"];
+const ETC = ["ibunka", "hatsuon", "school", "home", "howto"];
 function navSync(){
   const etc = ETC.includes(MODE);
   document.querySelectorAll(".mt").forEach(b => b.setAttribute("aria-selected", String(b.dataset.m === MODE || (etc && b.dataset.m === "etc"))));
@@ -699,7 +703,7 @@ function extMode(){
   document.querySelector(".wrap").classList.toggle("ext", ext);
   document.querySelector(".wrap").classList.toggle("rd", MODE === "reading");
   if (MODE === "reading") { rdFit(); const f = document.querySelector("#m-reading iframe"); if (!f.getAttribute("src")) { f.addEventListener("load", rdTheme); f.src = f.dataset.src; } }
-  if (ext) { const f = document.querySelector("#m-" + MODE + " iframe"); if (!f.getAttribute("src")) f.src = f.dataset.src; }
+  if (ext) { const f = document.querySelector("#m-" + MODE + " iframe"); if (f && !f.getAttribute("src")) f.src = f.dataset.src; }
 }
 function subPost(msg){ document.querySelectorAll("iframe.subapp").forEach(f => { try { f.contentWindow && f.contentWindow.postMessage(msg, "*"); } catch (e) {} }); }
 function subTheme(){ subPost({ t: "theme", dark: document.documentElement.getAttribute("data-theme") === "dark" }); rdTheme(); }
