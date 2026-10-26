@@ -261,9 +261,27 @@
   #gq p{margin:0 0 12px;line-height:2.1;text-indent:0}
   .blank .sl{color:var(--ink-3);font-size:12px}
   .nextpart{display:flex;justify-content:flex-end;margin-top:26px}
+
+  /* レベル切り替え（A1 中1・中2・中3／A2） */
+  .lvbar{background:var(--paper);border-bottom:1px solid var(--rule)}
+  .lvbar-in{max-width:860px;margin:0 auto;padding:10px 18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .lvbar .lvl{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3);margin-right:2px}
+  .lvbtn{display:inline-flex;flex-direction:column;align-items:flex-start;text-decoration:none;border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:12px;padding:5px 12px;line-height:1.25}
+  .lvbtn b{font-family:var(--en);font-size:16px;color:var(--navy)}
+  .lvbtn span{font-size:11.5px;color:var(--ink-2);font-weight:700}
+  .lvbtn:hover{border-color:var(--ink-3)}
+  .lvbtn[aria-current="page"]{background:var(--orange);border-color:var(--orange)}
+  .lvbtn[aria-current="page"] b,.lvbtn[aria-current="page"] span{color:#fff}
+  @media (max-width:600px){.lvbar-in{padding:8px 10px;gap:5px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.lvbar .lvl{display:none}.lvbtn{padding:4px 6px;align-items:center;text-align:center}.lvbtn b{font-size:14px}.lvbtn span{font-size:10px;white-space:nowrap}}
 </style>
+<script>
+/* 前回 A1 を選んでいたら A1 を開く（はじめては A1 中1） */
+(function(){ var v = null; try { v = localStorage.getItem("rd-level"); } catch (e) {}
+  if (!/^#part-/.test(location.hash) && v !== "a2") location.replace("a1.html#" + (/^[123]$/.test(v) ? v : "1")); })();
+</script>
 </head>
 <body>
+<nav class="lvbar" aria-label="レベルを選ぶ"><div class="lvbar-in"><span class="lvl">LEVEL</span><a class="lvbtn" href="a1.html#1" data-lv="1"><b>A1</b><span>中1・英検5級</span></a><a class="lvbtn" href="a1.html#2" data-lv="2"><b>A1</b><span>中2・英検4級</span></a><a class="lvbtn" href="a1.html#3" data-lv="3"><b>A1</b><span>中3・英検3級</span></a><a class="lvbtn" href="index.html" data-lv="a2" aria-current="page"><b>A2</b><span>英検準2級</span></a></div></nav>
 <header class="mast">
   <div class="mast-in">
     <div class="mast-t">
@@ -13231,6 +13249,7 @@ function restore(){
 document.addEventListener("click", e => {
   const t = e.target;
   let b;
+  if ((b = t.closest(".lvbtn"))) { try { localStorage.setItem("rd-level", b.dataset.lv); } catch (x) {} return; }
   if ((b = t.closest("figure.va"))) { b.classList.toggle("zoom"); return; }
   if ((b = t.closest(".nav a"))) { e.preventDefault(); const s = document.querySelector(b.getAttribute("href")); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   if ((b = t.closest("[data-goto]"))) { show(b.dataset.goto, true); return; }
