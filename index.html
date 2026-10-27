@@ -429,7 +429,7 @@
       <p class="mast-en">Kodai Yonehara</p>
       <p class="mast-et">Basic Grammar for Mastering English Conversation</p>
       <h1 class="mast-h"><span>英会話のための</span>基本英文法<wbr><em>完全マスター</em><em class="plus">＋</em><wbr><em class="sec2">L４ 総復習と発展</em></h1>
-      <p class="mast-sub">瞬間英作・文法理解度チェック・入れ替えドリル・単語帳・リーディング・その他</p>
+      <p class="mast-sub">瞬間英作・文法理解度チェック・入れ替えドリル・単語帳・リーディング・スピーチ＆ライティング・その他</p>
     </div>
     <img class="cover" src="img/cover.jpg" width="576" height="820" alt="『英会話のための基本英文法完全マスター』（米原幸大 著・IBCパブリッシング）の表紙">
   </div>
@@ -441,7 +441,8 @@
     <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">3</span>入れ替えドリル</button>
     <button class="mt" type="button" role="tab" data-m="tango" aria-selected="false"><span class="num">4</span>単語帳</button>
     <button class="mt" type="button" role="tab" data-m="reading" aria-selected="false"><span class="num">5</span>リーディング</button>
-    <button class="mt" type="button" role="tab" data-m="etc" aria-selected="false"><span class="num">6</span>その他</button>
+    <button class="mt" type="button" role="tab" data-m="sw" aria-selected="false"><span class="num">6</span>スピーチ＆ライティング</button>
+    <button class="mt" type="button" role="tab" data-m="etc" aria-selected="false"><span class="num">7</span>その他</button>
     <button class="theme" id="themeBtn" type="button" aria-pressed="false">ダーク</button>
   </div>
   <div class="subnav" id="subnav" hidden>
@@ -552,6 +553,7 @@
   <div class="mode sub" id="m-tango"><iframe class="subapp" data-src="tango.html" title="単語帳"></iframe></div>
   <div class="mode sub" id="m-ibunka"><iframe class="subapp" data-src="ibunka.html" title="異文化コミュ"></iframe></div>
   <div class="mode sub" id="m-hatsuon"><iframe class="subapp" data-src="hatsuon.html" title="英語の発音"></iframe></div>
+  <div class="mode sub" id="m-sw"><iframe class="subapp" data-src="speech.html" title="スピーチ＆ライティング"></iframe></div>
   <div class="mode sub" id="m-reading"><iframe class="rdapp" data-src="reading/index.html" title="リーディング"></iframe></div>
   <div class="mode sub" id="m-school"><iframe class="subapp" data-src="tsukaikata.html#school" title="学校・塾での本アプリの使い方"></iframe></div>
   <div class="mode sub" id="m-howto"><a href="gakushu.jpg" target="_blank" rel="noopener"><img src="gakushu.jpg" width="1024" height="1536" loading="lazy" alt="学習方法：『英会話のための基本英文法 完全マスター』で伸ばす英語運用力"></a></div>
@@ -658,7 +660,7 @@ $("chapbar").addEventListener("click", e => {
 });
 $("partbar").addEventListener("click", e => { const b = e.target.closest(".ptab"); if (b) selectLesson(Number(b.dataset.i)); });
 
-const MODE_NAME = { check: "文法理解度チェック", drill: "入れ替えドリル", speak: "瞬間英作", tango: "単語帳", ibunka: "異文化コミュ", hatsuon: "英語の発音", reading: "リーディング", school: "学校・塾での本アプリの使い方", home: "家庭での本アプリの使い方", howto: "学習方法", fukisoku: "不規則動詞" };
+const MODE_NAME = { check: "文法理解度チェック", drill: "入れ替えドリル", speak: "瞬間英作", tango: "単語帳", ibunka: "異文化コミュ", hatsuon: "英語の発音", reading: "リーディング", sw: "スピーチ＆ライティング", school: "学校・塾での本アプリの使い方", home: "家庭での本アプリの使い方", howto: "学習方法", fukisoku: "不規則動詞" };
 function drawHead(){
   const L = LESSONS[LI];
   $("head").innerHTML =
@@ -688,7 +690,7 @@ function setMode(m){
   else window.scrollTo({ top: 0 });
 }
 
-/* ===== 5 その他（異文化コミュ・英語の発音・本アプリの使い方）===== */
+/* ===== 7 その他（異文化コミュ・英語の発音・本アプリの使い方）===== */
 const ETC = ["ibunka", "hatsuon", "school", "home", "howto", "fukisoku"];
 function navSync(){
   const etc = ETC.includes(MODE);
@@ -701,7 +703,7 @@ function navSync(){
 
 /* ===== 単語帳・その他（別ページを iframe で表示）===== */
 function extMode(){
-  const ext = MODE === "tango" || MODE === "reading" || ETC.includes(MODE);
+  const ext = MODE === "tango" || MODE === "reading" || MODE === "sw" || ETC.includes(MODE);
   document.querySelector(".wrap").classList.toggle("ext", ext);
   document.querySelector(".wrap").classList.toggle("rd", MODE === "reading");
   if (MODE === "reading") { rdFit(); const f = document.querySelector("#m-reading iframe"); if (!f.getAttribute("src")) { f.addEventListener("load", rdTheme); f.src = f.dataset.src; } }
