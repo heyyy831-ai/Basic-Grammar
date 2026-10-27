@@ -449,10 +449,10 @@
     <span class="sl">その他</span>
     <button class="st" type="button" data-m="ibunka" aria-pressed="false">異文化コミュ</button>
     <button class="st" type="button" data-m="hatsuon" aria-pressed="false">英語の発音</button>
+    <button class="st" type="button" data-m="fukisoku" aria-pressed="false">不規則動詞</button>
     <button class="st" type="button" data-m="school" aria-pressed="false">学校・塾での本アプリの使い方</button>
     <button class="st" type="button" data-m="home" aria-pressed="false">家庭での本アプリの使い方</button>
     <button class="st" type="button" data-m="howto" aria-pressed="false">学習方法</button>
-    <button class="st" type="button" data-m="fukisoku" aria-pressed="false">不規則動詞</button>
   </div>
 </nav>
 
@@ -556,7 +556,7 @@
   <div class="mode sub" id="m-sw"><iframe class="subapp" data-src="speech.html" title="スピーチ＆ライティング"></iframe></div>
   <div class="mode sub" id="m-reading"><iframe class="rdapp" data-src="reading/index.html" title="リーディング"></iframe></div>
   <div class="mode sub" id="m-school"><iframe class="subapp" data-src="tsukaikata.html#school" title="学校・塾での本アプリの使い方"></iframe></div>
-  <div class="mode sub" id="m-howto"><a href="gakushu.jpg" target="_blank" rel="noopener"><img src="gakushu.jpg" width="1024" height="1536" loading="lazy" alt="学習方法：『英会話のための基本英文法 完全マスター』で伸ばす英語運用力"></a></div>
+  <div class="mode sub" id="m-howto"><a href="gakushu.jpg" target="_blank" rel="noopener"><img src="gakushu.jpg" width="1086" height="1448" loading="lazy" alt="学習方法：『英会話のための基本英文法 完全マスター』で伸ばす英語運用力"></a></div>
   <div class="mode sub" id="m-fukisoku"><iframe class="subapp" data-src="fukisoku.html" title="不規則動詞"></iframe></div>
   <div class="mode sub" id="m-home"><iframe class="subapp" data-src="tsukaikata.html#home" title="家庭での本アプリの使い方"></iframe></div>
 </div>
@@ -691,7 +691,7 @@ function setMode(m){
 }
 
 /* ===== 7 その他（異文化コミュ・英語の発音・本アプリの使い方）===== */
-const ETC = ["ibunka", "hatsuon", "school", "home", "howto", "fukisoku"];
+const ETC = ["ibunka", "hatsuon", "fukisoku", "school", "home", "howto"];
 function navSync(){
   const etc = ETC.includes(MODE);
   document.querySelectorAll(".mt").forEach(b => b.setAttribute("aria-selected", String(b.dataset.m === MODE || (etc && b.dataset.m === "etc"))));
