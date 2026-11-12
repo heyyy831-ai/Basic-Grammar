@@ -300,6 +300,11 @@
   #m-check .row dt{font-size:12.5px;color:var(--ink-3)}
   #m-check .row dd{margin:0;font-size:15px;font-weight:700;color:var(--ink)}
   #m-check .row dd .en,#m-check .en{font-family:var(--en);font-size:17px}
+  #m-check .vcard{background:var(--paper);border:1px solid var(--rule);border-radius:16px;margin:14px 0 18px;padding:16px 18px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  #m-check .vcard h3{margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:8px}
+  #m-check .vcard h3 .vi{flex:none;width:24px;height:24px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:11px}
+  #m-check .vcard p{margin:0 0 10px;font-size:13px;color:var(--ink-2)}
+  #m-check .vcard video{display:block;width:100%;max-width:880px;aspect-ratio:16/9;background:#000;border-radius:10px}
   #m-check .anote{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--rule);font-size:13px;line-height:1.85;color:var(--ink-2)}
   #m-check .pos{border-bottom:2px solid currentColor;padding-bottom:1px;font-family:var(--en);font-weight:700}
   #m-check .n{color:var(--pos-n)} #m-check .v{color:var(--pos-v)} #m-check .adj{color:var(--pos-adj)} #m-check .adv{color:var(--pos-adv)}
@@ -462,6 +467,7 @@
   <!-- 1. 文法理解度チェック -->
   <div class="mode" id="m-check">
     <div class="sec-h"><span class="ic" style="background:var(--navy)">G</span><h2>文法理解度チェック</h2><span class="note">空欄に入力 → Enter で答え合わせ</span></div>
+    <section class="vcard" id="cVid"></section>
     <div class="tbar">
       <span class="score">正解 <b id="cDone">0</b> / <span id="cTotal">0</span> 問</span>
       <span class="track"><span id="cBar"></span></span>
@@ -725,7 +731,7 @@ document.querySelector(".nav-in").addEventListener("click", e => { const b = e.t
   if (b.dataset.m === "etc") { if (ETC.includes(MODE)) return; let last = "ibunka"; try { last = localStorage.getItem("bg-etc") || "ibunka"; } catch (er) {} setMode(ETC.includes(last) ? last : "ibunka"); }
   else setMode(b.dataset.m); });
 $("subnav").addEventListener("click", e => { const b = e.target.closest(".st"); if (b && b.dataset.m !== MODE) setMode(b.dataset.m); });
-function stopAll(){ AUD.stop(); dStop(); sStop(); subPost({ t: "stop" }); rdStop(); }
+function stopAll(){ document.querySelectorAll("#cVid video").forEach(v => { try { v.pause(); } catch (e) {} }); AUD.stop(); dStop(); sStop(); subPost({ t: "stop" }); rdStop(); }
 
 /* =====================================================================
    1. 文法理解度チェック（元アプリの採点ロジックをそのまま使用）
@@ -794,6 +800,9 @@ const PICKS = {};
 
 function renderCheck(){
   const li = LI, L = LESSONS[li];
+  $("cVid").innerHTML = '<h3><span class="vi">▶</span>文法の質疑応答ビデオ（1対1）</h3>' +
+    '<p>先生の質問のあと3秒間、自分で答えを考えてから生徒の答えを聞きましょう。</p>' +
+    '<video controls playsinline preload="metadata" src="video/QA_Lesson' + L.id + '.mp4#t=0.1"></video>';
   $("cItems").innerHTML = L.items.map((it, i) => {
     const k = li + "-" + i;
     PICKS[k] = PICKS[k] || solvePicks(li, i);
