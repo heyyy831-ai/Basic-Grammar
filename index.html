@@ -802,7 +802,7 @@ function renderCheck(){
   const li = LI, L = LESSONS[li];
   $("cVid").innerHTML = '<h3><span class="vi">▶</span>文法の質疑応答ビデオ（1対1）</h3>' +
     '<p>先生の質問のあと3秒間、自分で答えを考えてから生徒の答えを聞きましょう。</p>' +
-    '<video controls playsinline preload="metadata" src="video/QA_Lesson' + L.id + '.mp4#t=0.1"></video>';
+    '<video controls playsinline preload="metadata" src="' + encodeURI(chOf(L.id) + '回目_Lesson' + chOf(L.id) + '/video/QA_Lesson' + L.id + '.mp4') + '#t=0.1"></video>';
   $("cItems").innerHTML = L.items.map((it, i) => {
     const k = li + "-" + i;
     PICKS[k] = PICKS[k] || solvePicks(li, i);
