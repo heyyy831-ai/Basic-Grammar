@@ -232,6 +232,14 @@
   iframe.subapp{display:block;width:100%;height:900px;border:0;background:transparent}
   .wrap.ext #chapbar,.wrap.ext #partbar,.wrap.ext #head{display:none}
   .wrap.ext{padding-top:10px}
+  .l4bar{position:sticky;top:var(--navh,49px);z-index:9;display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 0;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);margin-bottom:12px}
+  .l4lb{font-size:12px;font-weight:700;color:var(--ink-3);margin-right:4px}
+  .l4j,.l4dl{border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:13px;font-weight:700;padding:5px 11px;border-radius:99px;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .l4j:hover,.l4dl:hover{border-color:var(--navy);color:var(--navy)}
+  .l4j.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .l4dl{margin-left:auto;font-size:12px;color:var(--ink-2)}
+  .l4pages{display:flex;flex-direction:column;align-items:center;gap:14px;padding-bottom:30px}
+  .l4pg{display:block;width:100%;max-width:860px;height:auto;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.04),0 8px 24px -16px rgba(0,0,0,.4);border-radius:4px}
   .subnav{max-width:1040px;margin:0 auto;padding:2px 18px 8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .subnav[hidden]{display:none}
   #m-howto{max-width:900px;margin:0 auto;padding:4px 0 40px}
@@ -434,7 +442,7 @@
       <p class="mast-en">Kodai Yonehara</p>
       <p class="mast-et">Basic Grammar for Mastering English Conversation</p>
       <h1 class="mast-h"><span>英会話のための</span>基本英文法<wbr><em>完全マスター</em><em class="plus">＋</em><wbr><em class="sec2">L４ 総復習と発展</em></h1>
-      <p class="mast-sub">瞬間英作・文法理解度チェック・入れ替えドリル・単語帳・リーディング・スピーチ＆ライティング・その他</p>
+      <p class="mast-sub">瞬間英作・文法理解度チェック・入れ替えドリル・L4テキスト・リーディング・スピーチ＆ライティング・その他</p>
     </div>
     <img class="cover" src="img/cover.jpg" width="576" height="820" alt="『英会話のための基本英文法完全マスター』（米原幸大 著・IBCパブリッシング）の表紙">
   </div>
@@ -444,7 +452,7 @@
     <button class="mt" type="button" role="tab" data-m="speak" aria-selected="true"><span class="num">1</span>瞬間英作</button>
     <button class="mt" type="button" role="tab" data-m="check" aria-selected="false"><span class="num">2</span>文法理解度チェック</button>
     <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">3</span>入れ替えドリル</button>
-    <button class="mt" type="button" role="tab" data-m="tango" aria-selected="false"><span class="num">4</span>単語帳</button>
+    <button class="mt" type="button" role="tab" data-m="l4text" aria-selected="false"><span class="num">4</span>L4テキスト</button>
     <button class="mt" type="button" role="tab" data-m="reading" aria-selected="false"><span class="num">5</span>リーディング</button>
     <button class="mt" type="button" role="tab" data-m="sw" aria-selected="false"><span class="num">6</span>スピーチ＆ライティング</button>
     <button class="mt" type="button" role="tab" data-m="etc" aria-selected="false"><span class="num">7</span>その他</button>
@@ -452,6 +460,7 @@
   </div>
   <div class="subnav" id="subnav" hidden>
     <span class="sl">その他</span>
+    <button class="st" type="button" data-m="tango" aria-pressed="false">単語帳</button>
     <button class="st" type="button" data-m="ibunka" aria-pressed="false">異文化コミュ</button>
     <button class="st" type="button" data-m="hatsuon" aria-pressed="false">英語の発音</button>
     <button class="st" type="button" data-m="fukisoku" aria-pressed="false">不規則動詞</button>
@@ -553,6 +562,10 @@
       <div class="lh"><h3>問題一覧</h3><button class="btn" id="sEn" type="button">英文を隠す</button></div>
       <ol class="slist" id="sList"></ol>
     </div>
+  </div>
+  <div class="mode sub" id="m-l4text">
+    <div class="l4bar" id="l4bar"><span class="l4lb">L4 総復習と発展</span><button type="button" class="l4j" data-p="2">目次</button><button type="button" class="l4j" data-p="4">4-0</button><button type="button" class="l4j" data-p="15">4-1</button><button type="button" class="l4j" data-p="26">4-2</button><button type="button" class="l4j" data-p="35">4-3</button><button type="button" class="l4j" data-p="44">4-4</button><button type="button" class="l4j" data-p="54">4-5</button><button type="button" class="l4j" data-p="62">4-6</button><button type="button" class="l4j" data-p="70">4-7</button><button type="button" class="l4j" data-p="77">4-8</button><button type="button" class="l4j" data-p="83">4-9</button><button type="button" class="l4j" data-p="90">索引</button><a class="l4dl" href="l4/L4_総復習と発展_高校レベル.pdf" target="_blank" rel="noopener">PDF</a></div>
+    <div class="l4pages"><img id="l4p1" class="l4pg" src="l4/p01.jpg" width="1075" height="1521" loading="eager" alt="L4テキスト 1ページ"><img id="l4p2" class="l4pg" src="l4/p02.jpg" width="1075" height="1521" loading="eager" alt="L4テキスト 2ページ"><img id="l4p3" class="l4pg" src="l4/p03.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 3ページ"><img id="l4p4" class="l4pg" src="l4/p04.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 4ページ"><img id="l4p5" class="l4pg" src="l4/p05.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 5ページ"><img id="l4p6" class="l4pg" src="l4/p06.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 6ページ"><img id="l4p7" class="l4pg" src="l4/p07.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 7ページ"><img id="l4p8" class="l4pg" src="l4/p08.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 8ページ"><img id="l4p9" class="l4pg" src="l4/p09.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 9ページ"><img id="l4p10" class="l4pg" src="l4/p10.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 10ページ"><img id="l4p11" class="l4pg" src="l4/p11.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 11ページ"><img id="l4p12" class="l4pg" src="l4/p12.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 12ページ"><img id="l4p13" class="l4pg" src="l4/p13.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 13ページ"><img id="l4p14" class="l4pg" src="l4/p14.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 14ページ"><img id="l4p15" class="l4pg" src="l4/p15.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 15ページ"><img id="l4p16" class="l4pg" src="l4/p16.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 16ページ"><img id="l4p17" class="l4pg" src="l4/p17.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 17ページ"><img id="l4p18" class="l4pg" src="l4/p18.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 18ページ"><img id="l4p19" class="l4pg" src="l4/p19.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 19ページ"><img id="l4p20" class="l4pg" src="l4/p20.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 20ページ"><img id="l4p21" class="l4pg" src="l4/p21.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 21ページ"><img id="l4p22" class="l4pg" src="l4/p22.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 22ページ"><img id="l4p23" class="l4pg" src="l4/p23.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 23ページ"><img id="l4p24" class="l4pg" src="l4/p24.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 24ページ"><img id="l4p25" class="l4pg" src="l4/p25.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 25ページ"><img id="l4p26" class="l4pg" src="l4/p26.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 26ページ"><img id="l4p27" class="l4pg" src="l4/p27.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 27ページ"><img id="l4p28" class="l4pg" src="l4/p28.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 28ページ"><img id="l4p29" class="l4pg" src="l4/p29.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 29ページ"><img id="l4p30" class="l4pg" src="l4/p30.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 30ページ"><img id="l4p31" class="l4pg" src="l4/p31.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 31ページ"><img id="l4p32" class="l4pg" src="l4/p32.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 32ページ"><img id="l4p33" class="l4pg" src="l4/p33.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 33ページ"><img id="l4p34" class="l4pg" src="l4/p34.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 34ページ"><img id="l4p35" class="l4pg" src="l4/p35.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 35ページ"><img id="l4p36" class="l4pg" src="l4/p36.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 36ページ"><img id="l4p37" class="l4pg" src="l4/p37.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 37ページ"><img id="l4p38" class="l4pg" src="l4/p38.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 38ページ"><img id="l4p39" class="l4pg" src="l4/p39.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 39ページ"><img id="l4p40" class="l4pg" src="l4/p40.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 40ページ"><img id="l4p41" class="l4pg" src="l4/p41.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 41ページ"><img id="l4p42" class="l4pg" src="l4/p42.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 42ページ"><img id="l4p43" class="l4pg" src="l4/p43.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 43ページ"><img id="l4p44" class="l4pg" src="l4/p44.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 44ページ"><img id="l4p45" class="l4pg" src="l4/p45.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 45ページ"><img id="l4p46" class="l4pg" src="l4/p46.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 46ページ"><img id="l4p47" class="l4pg" src="l4/p47.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 47ページ"><img id="l4p48" class="l4pg" src="l4/p48.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 48ページ"><img id="l4p49" class="l4pg" src="l4/p49.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 49ページ"><img id="l4p50" class="l4pg" src="l4/p50.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 50ページ"><img id="l4p51" class="l4pg" src="l4/p51.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 51ページ"><img id="l4p52" class="l4pg" src="l4/p52.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 52ページ"><img id="l4p53" class="l4pg" src="l4/p53.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 53ページ"><img id="l4p54" class="l4pg" src="l4/p54.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 54ページ"><img id="l4p55" class="l4pg" src="l4/p55.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 55ページ"><img id="l4p56" class="l4pg" src="l4/p56.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 56ページ"><img id="l4p57" class="l4pg" src="l4/p57.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 57ページ"><img id="l4p58" class="l4pg" src="l4/p58.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 58ページ"><img id="l4p59" class="l4pg" src="l4/p59.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 59ページ"><img id="l4p60" class="l4pg" src="l4/p60.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 60ページ"><img id="l4p61" class="l4pg" src="l4/p61.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 61ページ"><img id="l4p62" class="l4pg" src="l4/p62.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 62ページ"><img id="l4p63" class="l4pg" src="l4/p63.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 63ページ"><img id="l4p64" class="l4pg" src="l4/p64.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 64ページ"><img id="l4p65" class="l4pg" src="l4/p65.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 65ページ"><img id="l4p66" class="l4pg" src="l4/p66.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 66ページ"><img id="l4p67" class="l4pg" src="l4/p67.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 67ページ"><img id="l4p68" class="l4pg" src="l4/p68.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 68ページ"><img id="l4p69" class="l4pg" src="l4/p69.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 69ページ"><img id="l4p70" class="l4pg" src="l4/p70.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 70ページ"><img id="l4p71" class="l4pg" src="l4/p71.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 71ページ"><img id="l4p72" class="l4pg" src="l4/p72.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 72ページ"><img id="l4p73" class="l4pg" src="l4/p73.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 73ページ"><img id="l4p74" class="l4pg" src="l4/p74.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 74ページ"><img id="l4p75" class="l4pg" src="l4/p75.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 75ページ"><img id="l4p76" class="l4pg" src="l4/p76.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 76ページ"><img id="l4p77" class="l4pg" src="l4/p77.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 77ページ"><img id="l4p78" class="l4pg" src="l4/p78.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 78ページ"><img id="l4p79" class="l4pg" src="l4/p79.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 79ページ"><img id="l4p80" class="l4pg" src="l4/p80.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 80ページ"><img id="l4p81" class="l4pg" src="l4/p81.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 81ページ"><img id="l4p82" class="l4pg" src="l4/p82.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 82ページ"><img id="l4p83" class="l4pg" src="l4/p83.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 83ページ"><img id="l4p84" class="l4pg" src="l4/p84.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 84ページ"><img id="l4p85" class="l4pg" src="l4/p85.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 85ページ"><img id="l4p86" class="l4pg" src="l4/p86.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 86ページ"><img id="l4p87" class="l4pg" src="l4/p87.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 87ページ"><img id="l4p88" class="l4pg" src="l4/p88.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 88ページ"><img id="l4p89" class="l4pg" src="l4/p89.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 89ページ"><img id="l4p90" class="l4pg" src="l4/p90.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 90ページ"><img id="l4p91" class="l4pg" src="l4/p91.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 91ページ"><img id="l4p92" class="l4pg" src="l4/p92.jpg" width="1075" height="1521" loading="lazy" alt="L4テキスト 92ページ"></div>
   </div>
   <div class="mode sub" id="m-tango"><iframe class="subapp" data-src="tango.html" title="単語帳"></iframe></div>
   <div class="mode sub" id="m-ibunka"><iframe class="subapp" data-src="ibunka.html" title="異文化コミュ"></iframe></div>
@@ -662,7 +675,7 @@ $("chapbar").addEventListener("click", e => {
 });
 $("partbar").addEventListener("click", e => { const b = e.target.closest(".ptab"); if (b) selectLesson(Number(b.dataset.i)); });
 
-const MODE_NAME = { check: "文法理解度チェック", drill: "入れ替えドリル", speak: "瞬間英作", tango: "単語帳", ibunka: "異文化コミュ", hatsuon: "英語の発音", reading: "リーディング", sw: "スピーチ＆ライティング", howto: "学習方法", fukisoku: "不規則動詞" };
+const MODE_NAME = { l4text: "L4テキスト", check: "文法理解度チェック", drill: "入れ替えドリル", speak: "瞬間英作", tango: "単語帳", ibunka: "異文化コミュ", hatsuon: "英語の発音", reading: "リーディング", sw: "スピーチ＆ライティング", howto: "学習方法", fukisoku: "不規則動詞" };
 function drawHead(){
   const L = LESSONS[LI];
   $("head").innerHTML =
@@ -681,6 +694,19 @@ function selectLesson(i, keepScroll){
   try { localStorage.setItem("gm-pos", JSON.stringify({ li: LI, m: MODE })); } catch (e) {}
   if (!keepScroll) window.scrollTo({ top: 0 });
 }
+$("l4bar").addEventListener("click", e => {
+  const b = e.target.closest(".l4j"); if (!b) return;
+  const img = $("l4p" + b.dataset.p); if (!img) return;
+  rdFit();
+  const off = document.querySelector(".nav").offsetHeight + $("l4bar").offsetHeight + 8;
+  window.scrollTo({ top: img.getBoundingClientRect().top + window.scrollY - off });
+});
+function l4Mark(){
+  const off = document.querySelector(".nav").offsetHeight + $("l4bar").offsetHeight + 40; let cur = null;
+  document.querySelectorAll(".l4j").forEach(b => { const img = $("l4p" + b.dataset.p); if (img.getBoundingClientRect().top - off <= 0) cur = b; });
+  document.querySelectorAll(".l4j").forEach(b => b.classList.toggle("on", b === cur));
+}
+window.addEventListener("scroll", () => { if (MODE === "l4text") l4Mark(); }, { passive: true });
 function setMode(m){
   stopAll();
   MODE = m;
@@ -693,7 +719,7 @@ function setMode(m){
 }
 
 /* ===== 7 その他（異文化コミュ・英語の発音・不規則動詞・学習方法）===== */
-const ETC = ["ibunka", "hatsuon", "fukisoku", "howto"];
+const ETC = ["tango", "ibunka", "hatsuon", "fukisoku", "howto"];
 function navSync(){
   const etc = ETC.includes(MODE);
   document.querySelectorAll(".mt").forEach(b => b.setAttribute("aria-selected", String(b.dataset.m === MODE || (etc && b.dataset.m === "etc"))));
@@ -705,9 +731,10 @@ function navSync(){
 
 /* ===== 単語帳・その他（別ページを iframe で表示）===== */
 function extMode(){
-  const ext = MODE === "tango" || MODE === "reading" || MODE === "sw" || ETC.includes(MODE);
+  const ext = MODE === "l4text" || MODE === "tango" || MODE === "reading" || MODE === "sw" || ETC.includes(MODE);
   document.querySelector(".wrap").classList.toggle("ext", ext);
   document.querySelector(".wrap").classList.toggle("rd", MODE === "reading");
+  if (MODE === "l4text") { rdFit(); l4Mark(); }
   if (MODE === "reading") { rdFit(); const f = document.querySelector("#m-reading iframe"); if (!f.getAttribute("src")) { f.addEventListener("load", rdTheme); f.src = f.dataset.src; } }
   if (ext) { const f = document.querySelector("#m-" + MODE + " iframe"); if (f && !f.getAttribute("src")) f.src = f.dataset.src; }
 }
