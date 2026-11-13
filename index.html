@@ -342,6 +342,10 @@
   .dg-lbl{font-weight:700;color:var(--navy);font-size:16px}
   .dg-op{color:var(--ink-3);font-weight:700}
   .dg-stack{display:inline-flex;flex-direction:column;align-items:center;border:1.5px solid var(--navy);border-radius:10px;padding:4px 14px;line-height:1.5;font-weight:700}
+  .dg-aux{padding-bottom:44px}
+  .dg-bx{position:relative;display:inline-flex}
+  .dg-under{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:8px;white-space:nowrap;font-weight:700;line-height:1.5}
+  .dg-under .dg-or{font-size:15px;margin-right:2px}
   .dg-or{font-family:"Crimson Pro",serif;font-style:italic;font-weight:400;color:var(--ink-3);font-size:13px;line-height:1.1}
   .dg-opt{background:var(--soft);border:1px dashed var(--rule);border-radius:8px;padding:2px 8px;color:var(--ink-2)}
   .dg-sc{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 8px}
@@ -374,6 +378,8 @@
     .op-num small{margin:0}
     .tocl ul{margin-left:0}
     .lp{text-align:left}
+    .dg-eq{row-gap:44px}
+    .dg-aux{padding-bottom:20px}
   }
   .subnav{max-width:1040px;margin:0 auto;padding:2px 18px 8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .subnav[hidden]{display:none}
@@ -776,7 +782,7 @@
 <span class="l4pm" id="l4p8"></span>
 <div class="dg dg-aux">
 <div class="dg-eq"><span class="dg-lbl">助動詞</span><span class="dg-op">＝</span>
-<span class="dg-stack"><span>法助動詞</span><span class="dg-or">or</span><span>時制</span><span class="dg-or">or</span><span>命令形</span></span>
+<span class="dg-bx"><span class="dg-stack"><span>法助動詞</span><span class="dg-or">or</span><span>時制</span></span><span class="dg-under"><span class="dg-or">or</span> 命令形</span></span>
 <span class="dg-op">＋</span><span class="dg-opt">(法助動詞句)</span><span class="dg-opt">(完了)</span><span class="dg-opt">(進行)</span><span class="dg-opt">(受動態)</span></div>
 </div>
 <h4 class="lh3"><span class="hn">1)</span><span class="ht">法助動詞(句)</span></h4>
