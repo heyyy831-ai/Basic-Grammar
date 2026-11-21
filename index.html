@@ -1893,6 +1893,12 @@ function textMatch(ans, pool){
   return pool.sp.includes(" " + a + " ");
 }
 const PICK_FIX = { "1-5#1": [0, 1, null], "1-9#8": [0] };
+// 空欄ごとに正解が決まっている問題（順番どおりに完全一致で採点。各空欄は候補の配列）
+const BLANK_FIX = {
+  "1-1#10": [["名詞"], ["形容詞"], ["動詞"], ["副詞"]],
+  "1-1#11": [["1", "一"], ["2", "二"], ["3", "三"]]
+};
+function blankFix(k){ const [li, i] = k.split("-").map(Number); return BLANK_FIX[LESSONS[li].id + "#" + (i + 1)]; }
 function solvePicks(li, i){
   const it = LESSONS[li].items[i];
   const html = it.prompt + it.ex.map(e => (e.s || "") + (e.j || "")).join("");
@@ -2007,10 +2013,11 @@ function check(k){
   const pool = POOL[li][i];
   if (isSelfOnly(k)) { setModel(k, true); showSelf(k); return; }
   let total = 0, right = 0, empty = 0;
-  item.querySelectorAll(".bk").forEach(inp => {
+  const bf = blankFix(k);
+  item.querySelectorAll(".bk").forEach((inp, j) => {
     total++;
     const v = inp.value.trim(); if (!v) empty++;
-    const ok = textMatch(v, pool);
+    const ok = bf && bf[j] ? !!v && bf[j].some(x => squash(norm(x)) === squash(norm(v).replace(/人称$/, ""))) : textMatch(v, pool);
     inp.classList.toggle("ok", ok); inp.classList.toggle("ng", !ok);
     if (ok) right++;
   });
